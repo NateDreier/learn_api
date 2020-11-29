@@ -26,6 +26,8 @@ fail_succeeded() {
 
 curl -Lf -H 'Content-Type: application/json' -X POST 'http://127.0.0.1:5000/tech/k8s' --data-raw '{"cool_factor": 1000}' > /dev/null 2>&1
 pass_fail
+curl -Lf -H 'Content-Type: application/json' -X POST 'http://127.0.0.1:5000/tech/k8s' --data-raw '{"cool_factor": 1000}' > /dev/null 2>&1
+fail_succeeded
 curl -Lf -H 'Content-Type: application/json' -X GET 'http://127.0.0.1:5000/tech/k8s' > /dev/null 2>&1
 pass_fail
 curl -Lf -H 'Content-Type: application/json' -X GET 'http://127.0.0.1:5000/technologies' > /dev/null 2>&1

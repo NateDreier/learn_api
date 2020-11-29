@@ -9,20 +9,25 @@ api = Api(app)
 technologies = []
 
 # 404 NOT FOUND
+# 400 BAD REQUEST
+# 200 OK
 # 201 CREATED
 # 202 ACCEPTED (delaying the creation)(ie the creation takes a couple of minutes)
 
 
 class Tech(Resource):
     def get(self, name):
-        item = next(filter(lambda x: x['name'] == name, items), None)
-        return {"item": item}, 200 if item else 404 
+        item = next(filter(lambda x: x["name"] == name, technologies), None)
+        return {"item": item}, 200 if item else 404
 
     def post(self, name):
-        request_data = request.get_json()
-        item = {"name": name, "cool factor": request_data["cool_factor"]}
-        technologies.append(item)
-        return item, 201
+        if next(filter(lambda x: x["name"] == name, technologies), None):
+            return {"message": f"{name} already exists"}, 400
+        else:
+            request_data = request.get_json()
+            item = {"name": name, "cool factor": request_data["cool_factor"]}
+            technologies.append(item)
+            return item, 201
 
 
 class TechList(Resource):
