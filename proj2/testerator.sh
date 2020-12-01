@@ -6,21 +6,30 @@
 # -L --location : If the server reports that the requested page has moved to a different location --->
 # --->  (3xx response code), this option will make curl redo the request on the new location
 
-
+S=0
+F=0
 
 pass_fail() {
     if [[ $? -eq 0 ]]; then
-        echo "SUCCESS"
+        pass_fail_count SUCCESS
     else
-        echo "FAIL"
+        pass_fail_count FAIL
     fi
 }
     
 fail_succeeded() {
     if [[ $? -eq 22 ]]; then
-        echo "SUCCESS"
+        pass_fail_count SUCCESS
     else
-        echo "FAIL"
+        pass_fail_count FAIL
+    fi
+}
+
+pass_fail_count() {
+    if [[ $1 ==  "SUCCESS" ]]; then
+        S=$(($S+1))
+    else
+        F=$(($F+1))
     fi
 }
 
@@ -34,4 +43,6 @@ curl -Lf -H 'Content-Type: application/json' -X GET 'http://127.0.0.1:5000/techn
 pass_fail
 curl -Lf -H 'Content-Type: application/json' -X GET 'http://127.0.0.1:5000/tech/tit' > /dev/null 2>&1
 fail_succeeded
+
+echo "$S SUCCESS, $F FAIL"
 
