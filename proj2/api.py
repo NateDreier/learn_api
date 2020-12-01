@@ -5,11 +5,12 @@ from flask_restful import Resource, Api
 
 app = Flask(__name__)
 api = Api(app)
+app.secret_key = "souper_seacret"
 
 technologies = []
 
-# 404 NOT FOUND
 # 400 BAD REQUEST
+# 404 NOT FOUND
 # 200 OK
 # 201 CREATED
 # 202 ACCEPTED (delaying the creation)(ie the creation takes a couple of minutes)
