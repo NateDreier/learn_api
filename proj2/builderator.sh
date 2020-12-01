@@ -24,4 +24,4 @@ docker run -d -p 5000:5000 --name api test_api:$version > /dev/null 2>&1
 
 sleep 2
 
-pytest py_testerator.py
+pytest testerator.py
